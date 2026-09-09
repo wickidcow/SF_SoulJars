@@ -1,24 +1,84 @@
-name: Java CI
+name: Compatibility CI
 
 on:
   push:
-    branches:
-    - master
+    branches: ['**']
   pull_request:
-    branches:
-    - master
+    branches: ['**']
+  workflow_dispatch:
 
 jobs:
-  build:
-
+  source-policy:
+    name: English-only / no GuizhanLib dependency
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3.5.3
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v3.11.0
-      with:
-        java-version: 8
-        distribution: 'adopt'
-    - name: Build with Maven
-      run: mvn package --file pom.xml
+      - uses: actions/checkout@v6
+      - name: Validate source policy
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+          bad=[]
+          for root in [Path('src'), Path('README.md')]:
+              for p in ([root] if root.is_file() else [x for x in root.rglob('*') if x.is_file()]):
+                  t=p.read_text(encoding='utf-8',errors='ignore')
+                  if re.search(r'[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]',t): bad.append(f'CJK text: {p}')
+          for root in [Path('src'), Path('pom.xml')]:
+              for p in ([root] if root.is_file() else [x for x in root.rglob('*') if x.is_file()]):
+                  if re.search(r'guizhan',p.read_text(encoding='utf-8',errors='ignore'),re.I): bad.append(f'GuizhanLib reference: {p}')
+          if bad:
+              print('\n'.join(sorted(set(bad))))
+              sys.exit(1)
+          PY
+
+  legacy:
+    name: Slimefun Legacy / Paper 26.2+
+    needs: source-policy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with: {distribution: temurin, java-version: '25', cache: maven}
+      - uses: actions/checkout@v6
+        with: {repository: wickidcow/Slimefun-Legacy, ref: master, path: .deps/Slimefun-Legacy}
+      - name: Publish Slimefun Legacy locally
+        working-directory: .deps/Slimefun-Legacy
+        run: |
+          chmod +x gradlew
+          ./gradlew publishToMavenLocal -PprojectVersion=SOULJARS-CI-SNAPSHOT --no-daemon
+      - name: Build against Slimefun Legacy
+        run: mvn -B clean verify -Dpaper.version='[26.2.build,)' -Dslimefun.groupId='com.github.slimefun' -Dslimefun.artifactId='Slimefun' -Dslimefun.version='SOULJARS-CI-SNAPSHOT'
+
+  united:
+    name: Slimefun United compatibility
+    needs: source-policy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with: {distribution: temurin, java-version: '25', cache: maven}
+      - uses: actions/checkout@v6
+        with: {repository: Slimefun-United/Slimefun-United, path: .deps/Slimefun-United}
+      - name: Publish Slimefun United locally
+        working-directory: .deps/Slimefun-United
+        run: mvn -B -DskipTests install
+      - name: Build against Slimefun United
+        run: mvn -B clean verify -Dpaper.version='[26.2.build,)' -Dslimefun.groupId='io.github.slimefun_united' -Dslimefun.artifactId='slimefun-united' -Dslimefun.version='4.10-SNAPSHOT'
+
+  portable-api:
+    name: ${{ matrix.name }} compatibility
+    needs: source-policy
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: Slimefun Gugu 2026.1, group: com.github.SlimefunGuguProject, artifact: Slimefun4, version: '2026.1'}
+          - {name: Slimefun4 RC-37, group: com.github.Slimefun, artifact: Slimefun4, version: RC-37}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with: {distribution: temurin, java-version: '25', cache: maven}
+      - name: Build compatibility target
+        run: mvn -B clean verify -Dpaper.version='[26.2.build,)' -Dslimefun.groupId='${{ matrix.group }}' -Dslimefun.artifactId='${{ matrix.artifact }}' -Dslimefun.version='${{ matrix.version }}'
