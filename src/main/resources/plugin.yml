@@ -1,7 +1,7 @@
 name: SoulJars
 version: ${project.version}
 authors: [TheBusyBiscuit, wickidcow]
-description: Modern SoulJars build for Minecraft 1.21.11+ with Legacy-first Slimefun compatibility and current Paper-family support.
+description: Maintained SoulJars addon for Slimefun Legacy on Minecraft 1.21.11+ and modern Paper-family servers.
 website: https://github.com/wickidcow/SF_SoulJars
 main: io.github.thebusybiscuit.souljars.SoulJars
 depend: [Slimefun]
