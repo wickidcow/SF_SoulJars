@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.wickidcow</groupId>
     <artifactId>SF_SoulJars</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>SF_SoulJars</name>
-    <description>Maintained SoulJars addon for Slimefun Legacy on modern Paper servers.</description>
+    <description>Maintained SoulJars addon with modern Minecraft mob support for Slimefun Legacy and Paper-family servers.</description>
     <url>https://github.com/wickidcow/SF_SoulJars</url>
     <licenses>
         <license>
