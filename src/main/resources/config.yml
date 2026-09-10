@@ -2,9 +2,6 @@
 options:
   include-modern-mobs: true
 
-# Used when a mob has no explicit souls-required entry.
-default-souls-required: 128
-
 # Existing server lists remain authoritative and are merged with modern-mobs when enabled.
 mobs:
 - BLAZE
@@ -85,6 +82,7 @@ modern-mobs:
 
 # Modern defaults keep common/passive mobs below the classic 128 cost and reserve
 # higher requirements for dangerous or rarer mobs. Existing server values win.
+# Any mob without an explicit value keeps SoulJars' classic default of 128 souls.
 souls-required:
   ALLAY: 64
   ARMADILLO: 64
@@ -116,9 +114,3 @@ souls-required:
   ZOGLIN: 192
   ZOMBIE_HORSE: 128
   ZOMBIE_NAUTILUS: 192
-
-# Filled Soul Jars are always registered. Broken-spawner crafting can be disabled
-# globally or for individual mob types without removing soul collection.
-broken-spawners:
-  enabled: true
-  denylist: []
