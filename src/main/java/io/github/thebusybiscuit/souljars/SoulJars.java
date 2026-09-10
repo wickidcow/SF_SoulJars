@@ -21,9 +21,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 
 public class SoulJars extends JavaPlugin implements Listener, SlimefunAddon {
@@ -72,16 +74,46 @@ public class SoulJars extends JavaPlugin implements Listener, SlimefunAddon {
         ).register(this);
 
         new JarsListener(this);
-
-        FileConfiguration config = getConfig();
-        for (String mob : config.getStringList("mobs")) {
-            try {
-                registerSoul(EntityType.valueOf(mob.toUpperCase(Locale.ROOT)));
-            } catch (IllegalArgumentException ex) {
-                getLogger().log(Level.WARNING, "Skipping invalid mob type from config: {0}", mob);
-            }
-        }
+        registerConfiguredMobs();
         saveConfig();
+    }
+
+    private void registerConfiguredMobs() {
+        FileConfiguration config = getConfig();
+        Set<String> configured = new LinkedHashSet<>(config.getStringList("mobs"));
+        if (config.getBoolean("options.include-modern-mobs", true)) {
+            configured.addAll(config.getStringList("modern-mobs"));
+        }
+
+        for (String mobName : configured) {
+            EntityType type = resolveEntityType(mobName);
+            if (type == null) {
+                getLogger().log(Level.WARNING, "Skipping invalid mob type from config: {0}", mobName);
+                continue;
+            }
+            if (mobs.containsKey(type)) {
+                continue;
+            }
+            registerSoul(type);
+        }
+    }
+
+    private EntityType resolveEntityType(String configuredName) {
+        if (configuredName == null || configuredName.isBlank()) {
+            return null;
+        }
+
+        String normalized = configuredName.trim().toUpperCase(Locale.ROOT).replace('-', '_').replace(' ', '_');
+        // Preserve older working configs that used Bukkit's historical Pig Zombie name.
+        if (normalized.equals("PIG_ZOMBIE")) {
+            normalized = "ZOMBIFIED_PIGLIN";
+        }
+
+        try {
+            return EntityType.valueOf(normalized);
+        } catch (IllegalArgumentException ex) {
+            return null;
+        }
     }
 
     private void registerSoul(EntityType type) {
