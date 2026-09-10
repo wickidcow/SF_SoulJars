@@ -1,41 +1,69 @@
-# SF_SoulJars
+<div align="center">
 
-Maintained SoulJars fork for modern Slimefun servers.
+# SF_SoulJars — Slimefun Legacy
+### Maintained soul capture and spawner progression for modern Paper servers
 
-SoulJars lets players capture mob souls in Slimefun items and use completed jars to create mob-specific broken spawners. The maintained fork preserves the original progression while updating the project for current Minecraft and Paper-family servers.
+SoulJars lets players capture mob souls in Slimefun items and use completed jars to create mob-specific broken spawners while preserving the classic addon progression.
 
+[![Build](https://github.com/wickidcow/SF_SoulJars/actions/workflows/maven.yml/badge.svg)](https://github.com/wickidcow/SF_SoulJars/actions/workflows/maven.yml)
+[![Slimefun Legacy](https://img.shields.io/badge/Slimefun-Legacy-6bd425)](https://github.com/wickidcow/Slimefun-Legacy)
+[![Paper](https://img.shields.io/badge/Server-Paper%2026.2-blue)](https://papermc.io/)
+[![Java](https://img.shields.io/badge/Build-Java%2025-orange)](https://adoptium.net/)
+[![License](https://img.shields.io/badge/License-GPLv3-blue)](https://github.com/wickidcow/Slimefun-Legacy/blob/master/LICENSE)
+
+[Releases](https://github.com/wickidcow/SF_SoulJars/releases) · [Builds](https://github.com/wickidcow/SF_SoulJars/actions) · [Issues](https://github.com/wickidcow/SF_SoulJars/issues)
+
+</div>
+
+> [!IMPORTANT]
+> **SF_SoulJars is an unofficial, independently maintained downstream fork of SoulJars.** It is maintained by `wickidcow` for [AlbionMC.com](https://albionmc.com) and the wider Slimefun community. It is not an official release of the original SoulJars project, the original Slimefun project, Slimefun United, or the SlimefunGuguProject.
+>
+> **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**
+
+---
+## What is SF_SoulJars?
+
+SoulJars adds mob-specific soul collection to Slimefun. Players collect souls into jars and can use completed jars in spawner progression. The maintained fork preserves the original behavior while updating the addon for Minecraft 1.21.11+, current Paper-family servers, and modern Slimefun APIs.
+
+`config.yml` controls which mob soul jars are enabled and how many souls each mob requires. Soul processing is event-driven and does not require its own global repeating scheduler.
+
+---
+## Download and build
+
+Release JARs use the maintained Slimefun-addon naming convention:
+
+`SF_SoulJars1.0.0.jar`
+
+The project builds with **Java 25** while targeting **Java 21 bytecode**. The production compatibility baseline is **Slimefun Legacy 4.1.48 on Paper 26.2**. Development builds are available from GitHub Actions and versioned release JARs are published on the Releases page.
+
+---
 ## Compatibility
 
-Primary Slimefun targets:
-- Slimefun Legacy
-- Slimefun United
+Primary target: **Slimefun Legacy**.
 
-Additional compatibility targets:
-- SlimefunGuguProject/Slimefun4
-- Original Slimefun4-compatible API implementations
+Compatibility is also validated against Slimefun United, SlimefunGuguProject/Slimefun4, and original Slimefun4-compatible APIs. Paper is the primary server family; Purpur, Folia and Leaf are compatibility targets. Folia support assumes the installed Slimefun implementation is itself Folia-compatible.
 
-Server software:
-- Paper
-- Purpur
-- Folia
-- Leaf
+The maintained code avoids obsolete Slimefun Dough config/updater helpers and external Slimefun utility-library dependencies in its main flow.
 
-Minecraft target: **1.21.11+**. Builds use Java 25 with Java 21 bytecode.
+---
+## Credits and project lineage
 
-Soul processing is event-driven and does not run its own global repeating scheduler. Folia support assumes the installed Slimefun implementation is itself Folia-compatible.
+Original SoulJars project and authorship belong to **TheBusyBiscuit** and its contributors. Modern compatibility and Slimefun Legacy maintenance are provided by **wickidcow**.
 
-## Dependency policy
+This fork exists to preserve and maintain that work for current servers—not to replace the original developers or claim their work as its own. Upstream authorship, copyright notices, and license obligations remain respected.
 
-This maintained fork avoids external Slimefun utility-library dependencies. Gugu compatibility is provided only through the shared Slimefun addon API.
+---
+## Independence, trademarks and non-affiliation
 
-The maintained code also avoids the old Slimefun Dough config/updater helpers in its main flow, reducing coupling to implementation-specific utility libraries.
+**NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**
 
-## Configuration
+SF_SoulJars and this maintenance fork are independent community projects. They are not affiliated with, endorsed by, sponsored by, approved by, or operated by Mojang Studios or Microsoft Corporation. References to Minecraft, Slimefun, Paper, upstream projects, companies, products, or communities are for identification, compatibility, attribution, and interoperability only.
 
-`config.yml` controls which mob soul jars are enabled and how many souls each mob requires.
+Minecraft, Mojang Studios, Microsoft, and other third-party names, logos, brands, and trademarks remain the property of their respective owners. No sponsorship, partnership, ownership, or endorsement is claimed or implied.
 
-## Maintenance
+---
+## License
 
-Original project by TheBusyBiscuit. Modern maintenance and compatibility work are provided by `wickidcow`.
+SF_SoulJars is distributed under the [GNU General Public License v3.0](https://github.com/wickidcow/Slimefun-Legacy/blob/master/LICENSE), consistent with the GPLv3 licensing of the upstream project.
 
-Report current-version issues at this repository.
+Upstream authorship and copyright remain with the original SoulJars authors and contributors. Copyright in later modifications remains with the contributors who authored those changes.
