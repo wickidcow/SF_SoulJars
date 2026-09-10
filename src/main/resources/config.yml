@@ -1,5 +1,11 @@
+# SoulJars configuration
 options:
-  auto-update: true
+  # Keeps the original mobs list fully user-controlled while also enabling
+  # the maintained modern Minecraft additions below.
+  include-modern-mobs: true
+
+# Original/legacy roster. Existing server configs keep their own version of
+# this list, so custom removals and additions are preserved.
 mobs:
 - BLAZE
 - CAVE_SPIDER
@@ -25,7 +31,6 @@ mobs:
 - PARROT
 - PHANTOM
 - PIG
-- PIG_ZOMBIE
 - PILLAGER
 - POLAR_BEAR
 - RABBIT
@@ -45,3 +50,39 @@ mobs:
 - ZOMBIE
 - ZOMBIE_VILLAGER
 - ZOMBIFIED_PIGLIN
+
+# Maintained additions for newer Minecraft releases. This is merged at runtime
+# with the server's existing `mobs` list when include-modern-mobs is enabled.
+# Bosses such as the Ender Dragon, Wither and Warden are intentionally not
+# enabled by default; server owners can still add supported EntityType names.
+modern-mobs:
+- ALLAY
+- ARMADILLO
+- AXOLOTL
+- BEE
+- BOGGED
+- BREEZE
+- CAMEL
+- CAMEL_HUSK
+- CAT
+- COPPER_GOLEM
+- CREAKING
+- FROG
+- GLOW_SQUID
+- GOAT
+- HAPPY_GHAST
+- HOGLIN
+- NAUTILUS
+- PARCHED
+- PIGLIN
+- PIGLIN_BRUTE
+- SHULKER
+- SNIFFER
+- STRIDER
+- SULFUR_CUBE
+- TADPOLE
+- TURTLE
+- VEX
+- ZOGLIN
+- ZOMBIE_HORSE
+- ZOMBIE_NAUTILUS
