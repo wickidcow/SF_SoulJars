@@ -1,11 +1,11 @@
 # SoulJars configuration
 options:
-  # Keeps the original mobs list fully user-controlled while also enabling
-  # the maintained modern Minecraft additions below.
   include-modern-mobs: true
 
-# Original/legacy roster. Existing server configs keep their own version of
-# this list, so custom removals and additions are preserved.
+# Used when a mob has no explicit souls-required entry.
+default-souls-required: 128
+
+# Existing server lists remain authoritative and are merged with modern-mobs when enabled.
 mobs:
 - BLAZE
 - CAVE_SPIDER
@@ -51,10 +51,6 @@ mobs:
 - ZOMBIE_VILLAGER
 - ZOMBIFIED_PIGLIN
 
-# Maintained additions for newer Minecraft releases. This is merged at runtime
-# with the server's existing `mobs` list when include-modern-mobs is enabled.
-# Bosses such as the Ender Dragon, Wither and Warden are intentionally not
-# enabled by default; server owners can still add supported EntityType names.
 modern-mobs:
 - ALLAY
 - ARMADILLO
@@ -86,3 +82,43 @@ modern-mobs:
 - ZOGLIN
 - ZOMBIE_HORSE
 - ZOMBIE_NAUTILUS
+
+# Modern defaults keep common/passive mobs below the classic 128 cost and reserve
+# higher requirements for dangerous or rarer mobs. Existing server values win.
+souls-required:
+  ALLAY: 64
+  ARMADILLO: 64
+  AXOLOTL: 64
+  BEE: 64
+  BOGGED: 128
+  BREEZE: 192
+  CAMEL: 64
+  CAMEL_HUSK: 128
+  CAT: 64
+  COPPER_GOLEM: 128
+  CREAKING: 192
+  FROG: 64
+  GLOW_SQUID: 64
+  GOAT: 64
+  HAPPY_GHAST: 128
+  HOGLIN: 192
+  NAUTILUS: 64
+  PARCHED: 128
+  PIGLIN: 128
+  PIGLIN_BRUTE: 256
+  SHULKER: 192
+  SNIFFER: 64
+  STRIDER: 64
+  SULFUR_CUBE: 192
+  TADPOLE: 64
+  TURTLE: 64
+  VEX: 192
+  ZOGLIN: 192
+  ZOMBIE_HORSE: 128
+  ZOMBIE_NAUTILUS: 192
+
+# Filled Soul Jars are always registered. Broken-spawner crafting can be disabled
+# globally or for individual mob types without removing soul collection.
+broken-spawners:
+  enabled: true
+  denylist: []
