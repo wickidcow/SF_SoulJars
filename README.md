@@ -26,7 +26,7 @@ Soul processing is event-driven and does not run its own global repeating schedu
 
 ## Dependency policy
 
-This addon has no direct GuizhanLib dependency and does not use GuizhanLib APIs. Gugu compatibility is provided through the shared Slimefun addon API.
+This maintained fork avoids external Slimefun utility-library dependencies. Gugu compatibility is provided only through the shared Slimefun addon API.
 
 The maintained code also avoids the old Slimefun Dough config/updater helpers in its main flow, reducing coupling to implementation-specific utility libraries.
 
