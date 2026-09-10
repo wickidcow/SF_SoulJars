@@ -17,13 +17,15 @@ Soul collection, partial jars, filled jars and broken-spawner crafting keep the 
 
 ## Modern mob support
 
-The maintained default roster adds current mobs such as Allay, Armadillo, Axolotl, Bogged, Breeze, Camel, Camel Husk, Copper Golem, Creaking, Happy Ghast, Nautilus, Parched, Sniffer, Sulfur Cube and Zombie Nautilus. Bosses are not added to the default roster.
+The maintained default roster includes current mobs such as Allay, Armadillo, Axolotl, Bogged, Breeze, Camel, Camel Husk, Copper Golem, Creaking, Happy Ghast, Nautilus, Parched, Sniffer, Sulfur Cube and Zombie Nautilus. Bosses are not added to the default roster.
 
-### 1.0.2 balancing pass
+### 1.0.3 balancing pass
 
-Modern mobs now ship with sensible default soul requirements instead of every new entity implicitly costing 128 souls. Common/passive mobs generally use 64, normal hostile mobs remain around 128, and rarer/dangerous mobs use 192-256. Server-configured values always win, so existing worlds are not forcibly rebalanced.
+Modern mobs ship with explicit default soul requirements instead of all implicitly using the classic 128-soul fallback. Common/passive mobs generally use 64, normal hostile mobs remain around 128, and rarer/dangerous mobs use 192-256. Existing server-configured values always win.
 
-Release JAR: `SF_SoulJars1.0.2.jar`
+The final 1.0.3 configuration contains only options the current implementation actually reads; no placeholder or unwired settings are shipped.
+
+Release JAR: `SF_SoulJars1.0.3.jar`
 
 Built with Java 25 targeting Java 21 bytecode for Slimefun Legacy/Paper 26.2+, with shared API compatibility retained for Slimefun United, SlimefunGuguProject/Slimefun4 and original Slimefun4-compatible implementations. Paper, Purpur, Folia and Leaf are supported targets where the Slimefun implementation itself is compatible.
 

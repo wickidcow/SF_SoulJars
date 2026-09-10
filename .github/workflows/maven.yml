@@ -11,8 +11,8 @@ permissions:
   contents: write
 
 env:
-  ARTIFACT_VERSION: "1.0.2"
-  OUTPUT_NAME: "SF_SoulJars1.0.2.jar"
+  ARTIFACT_VERSION: "1.0.3"
+  OUTPUT_NAME: "SF_SoulJars1.0.3.jar"
   MAIN_CLASS: "io.github.thebusybiscuit.souljars.SoulJars"
   SLIMEFUN_LEGACY_VERSION: "4.1.48"
   PAPER_VERSION: "26.2.build.111-stable"
@@ -43,12 +43,13 @@ jobs:
       - name: Verify modern roster and costs
         run: |
           set -euo pipefail
-          grep -Fq '<version>1.0.2</version>' pom.xml
+          grep -Fq '<version>1.0.3</version>' pom.xml
           grep -Fq -- '- COPPER_GOLEM' src/main/resources/config.yml
           grep -Fq -- '- ZOMBIE_NAUTILUS' src/main/resources/config.yml
           grep -Fq 'PIGLIN_BRUTE: 256' src/main/resources/config.yml
           grep -Fq 'BREEZE: 192' src/main/resources/config.yml
           grep -Fq 'GNU General Public License v3.0' README.md
+          if grep -Fq 'broken-spawners:' src/main/resources/config.yml; then echo 'Unwired broken-spawner config must not ship.' >&2; exit 1; fi
       - name: Build release JAR
         run: >-
           mvn -B -Dmaven.test.skip=true clean package
@@ -88,5 +89,5 @@ jobs:
             EXISTING="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}" --jq ".assets[] | select(.name == \"${OUTPUT_NAME}\") | .digest" | head -n1 || true)"
             if [[ -n "$EXISTING" ]]; then [[ "$EXISTING" == "$EXPECTED" ]] || exit 1; else gh release upload "$TAG" "$JAR" --repo "$GITHUB_REPOSITORY"; fi
           else
-            gh release create "$TAG" "$JAR" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "SF_SoulJars $TAG" --notes "Preserves the SoulJars collection/spawner implementation while assigning sensible configurable default soul requirements to newer Minecraft mobs. Existing server overrides remain authoritative."
+            gh release create "$TAG" "$JAR" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "SF_SoulJars $TAG" --notes "Final preservation modernization: keeps the classic SoulJars collection/spawner implementation, includes the modern Minecraft mob roster, and adds explicit modern soul requirements while removing unwired configuration keys. Existing server overrides remain authoritative."
           fi

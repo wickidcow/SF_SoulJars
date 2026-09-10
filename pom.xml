@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.wickidcow</groupId><artifactId>SF_SoulJars</artifactId><version>1.0.2</version><name>SF_SoulJars</name>
+    <groupId>io.github.wickidcow</groupId><artifactId>SF_SoulJars</artifactId><version>1.0.3</version><name>SF_SoulJars</name>
     <description>Maintained SoulJars with preserved classic behavior and balanced modern Minecraft mob defaults.</description>
     <url>https://github.com/wickidcow/SF_SoulJars</url>
     <licenses><license><name>GNU General Public License v3.0</name><url>https://github.com/wickidcow/Slimefun-Legacy/blob/master/LICENSE</url><distribution>repo</distribution></license></licenses>
