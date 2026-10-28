@@ -25,7 +25,7 @@
         <defaultGoal>clean verify</defaultGoal>
         <resources><resource><directory>src/main/resources</directory><filtering>true</filtering></resource><resource><directory>${project.basedir}</directory><filtering>false</filtering><includes><include>LICENSE</include></includes></resource></resources>
         <plugins>
-            <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.15.0</version><configuration><release>${maven.compiler.release}</release></configuration></plugin>
+            <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.16.0</version><configuration><release>${maven.compiler.release}</release></configuration></plugin>
             <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-shade-plugin</artifactId><version>3.6.2</version><configuration><createDependencyReducedPom>false</createDependencyReducedPom><relocations><relocation><pattern>org.bstats</pattern><shadedPattern>io.github.thebusybiscuit.souljars.bstats</shadedPattern></relocation></relocations><filters><filter><artifact>*:*</artifact><excludes><exclude>META-INF/*.SF</exclude><exclude>META-INF/*.DSA</exclude><exclude>META-INF/*.RSA</exclude></excludes></filter></filters></configuration><executions><execution><phase>package</phase><goals><goal>shade</goal></goals></execution></executions></plugin>
         </plugins>
     </build>
