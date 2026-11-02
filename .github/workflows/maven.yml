@@ -117,7 +117,7 @@ jobs:
           fi
           JAR="dist/${OUTPUT_NAME}"
           test -s "$JAR"
-          TAG_SOURCE="$(git ls-remote --tags origin "refs/tags/$TAG" "refs/tags/$TAG^{}" \\
+          TAG_SOURCE="$(git ls-remote --tags origin "refs/tags/$TAG" "refs/tags/$TAG^{}" \
             | awk 'index($2, "^{}") { peeled = $1; next } { direct = $1 } END { print peeled != "" ? peeled : direct }')"
           if [[ -n "$TAG_SOURCE" && "$TAG_SOURCE" != "$GITHUB_SHA" ]]; then
             echo "Existing version tag belongs to a different commit; refusing release" >&2
@@ -129,7 +129,7 @@ jobs:
               exit 1
             }
             mkdir -p .ci/existing-release
-            gh release download "$TAG" --repo "$GITHUB_REPOSITORY" \\
+            gh release download "$TAG" --repo "$GITHUB_REPOSITORY" \
               --pattern "$OUTPUT_NAME" --dir .ci/existing-release
             EXISTING=".ci/existing-release/$OUTPUT_NAME"
             test -s "$EXISTING"
