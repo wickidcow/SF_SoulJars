@@ -33,6 +33,8 @@ jobs:
           cache: maven
       - name: Install checksum-verified Apache Maven 3.10.0
         run: bash scripts/install_maven_3_10.sh
+      - name: Verify immutable release workflow contract
+        run: python3 -m unittest scripts/test_immutable_release_policy.py -v
       - name: Install Slimefun Legacy locally
         env:
           GH_TOKEN: ${{ github.token }}
